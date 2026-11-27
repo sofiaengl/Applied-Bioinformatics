@@ -3,13 +3,13 @@
 # Script for PCA 
 
 # 0. load the normalised main counts data 
-load ('/Users/edith/Desktop/Universitet/År5/TillämpadBioinformatik/Rscripts/main.counts.tmm_normalized.rda')
+load ('/Users/edith/Desktop/Universitet/År5/TillämpadBioinformatik/Applied_Bioinformatics_Project/main.counts.tmm_normalized.rda')
 
 # 1. Ladda nödvändiga paket (installera med install.packages("ggplot2") om det saknas)
 library(ggplot2)
 
 # 2. Läs in metadatafilen (ändra sökvägen om filen ligger i en annan mapp)
-meta_path <- "~/Desktop/Universitet/År5/TillämpadBioinformatik/Rscripts/pig_pheno_analysis.txt"
+meta_path <- "~/Desktop/Universitet/År5/TillämpadBioinformatik/Applied_Bioinformatics_Project/pig_pheno_analysis.txt"
 meta <- read.table(meta_path, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 
 # 3. Separera count-data från eventuella koordinat-kolumner i final_df
@@ -54,7 +54,8 @@ pca_df$Reversal_lib <- as.factor(pca_df$Reversal_lib)
 
 # 8. GÖR EN GEMENSAM REFANSRÄNSNING (FILTER) FÖR ALLA PLOTTAR
 # Detta säkerställer exakt samma inzoomning på alla bilder
-pca_clean <- subset(pca_df, PC1 < 20 & PC2 < 35 & PC2 > -20)
+#pca_clean <- subset(pca_df, PC1 < 20 & PC2 < 35 & PC2 > -20)
+pca_clean <- pca_df
 
 # 9. Skapa en universell funktion för plotten
 library(ggrepel) 
@@ -82,6 +83,7 @@ plot_pca_clean <- function(color_var, title_text) {
 }
 
 # 10. Skriv ut alla plottar med samma vy
+
 print(plot_pca_clean("Treat_tot", "PCA - Miljöbehandling"))
 print(plot_pca_clean("batch", "PCA - Batch"))
 print(plot_pca_clean("Sex", "PCA - Kön"))
